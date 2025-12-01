@@ -2,7 +2,8 @@
 
 ## PL/SQL Practicum Project Proposal
 ### Project Title: Event Budget Planner System
-### Student Name: IZA KURADUSENGE Emma ise
+### Student Name: IZA KURADUSENGE Emma Lise
+### Student ID: 28246
 ### Course: Database Development with PL/SQL
 ### Area: Business
 
