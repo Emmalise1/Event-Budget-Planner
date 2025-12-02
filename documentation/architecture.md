@@ -1,6 +1,9 @@
 # PHASE III: ER Diagram & System Architecture
 ## Event Budget Planner System
 
+![Event Budget Planner ER Diagram](../screenshots/database_objects/er_diagram.jpg)
+*Figure 1: Complete ER Diagram showing 3 tables and relationships*
+
 ## 1. ENTITIES (3 TABLES)
 
 ### Table 1: EVENTS
@@ -129,3 +132,4 @@ Meaning:
 **STUDENT ID:** 28246
 **PHASE:** III - Logical Model Design
 **DATE:** December 2025
+
