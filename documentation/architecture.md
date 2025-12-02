@@ -2,7 +2,7 @@
 ## Event Budget Planner System
 
 ![Event Budget Planner ER Diagram](https://github.com/Emmalise1/Event-Budget-Planner/blob/main/screenshots/database_objects/ER%20Diagram%201.PNG?raw=true)
-*Figure 1: Complete ER Diagram showing 3 tables and relationships*
+*Figure 1: Complete ER Diagram showing 3 entities and relationships*
 
 ## 1. ENTITIES (3 TABLES)
 
@@ -132,5 +132,6 @@ Meaning:
 **STUDENT ID:** 28246
 **PHASE:** III - Logical Model Design
 **DATE:** December 2025
+
 
 
