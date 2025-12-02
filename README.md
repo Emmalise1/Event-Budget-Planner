@@ -18,6 +18,12 @@ What differentiates the system is its inherent financial awareness; if, at any t
 Whether it is a wedding, a concert, or a small celebration, the tool allows for a clean, data-driven view of your finances. It combines automated data collection with prescriptive decision support. The system not only tracks expenses but also directs you toward a healthier financial position, encourages better planning, and lets you focus on a stress-free event experience.
 
 ---
+## Target Users
+- Event planners  
+- Individuals organizing weddings, parties, or conferences  
+- Small event management businesses  
+- Finance teams managing event budgets  
+---
 
 ## 2. Database Schema Overview
 
