@@ -25,6 +25,15 @@ Whether it is a wedding, a concert, or a small celebration, the tool allows for 
 - Finance teams managing event budgets  
 ---
 
+## Business Intelligence (BI) Potential
+The system will support decision-making through:
+- Spending trend analysis per event and category  
+- Budget utilization dashboards  
+- Risk prediction of budget overruns  
+- Identification of high-cost categories  
+
+---
+
 ## 2. Database Schema Overview
 
 ### Main Tables:
