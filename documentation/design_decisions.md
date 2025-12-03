@@ -197,13 +197,13 @@
 ## 9. SUCCESS CRITERIA FOR PHASE III
 
 ### Phase III Complete When:
-✅ ER diagram created with 3 tables and relationships  
-✅ Data dictionary documents 17 columns across 3 tables  
-✅ Design decisions documented (why 3 tables, no extra columns)  
-✅ Assumptions clearly stated (business and technical)  
-✅ Normalization to 3NF explained and justified  
-✅ BI considerations identified (fact vs dimension tables)  
-✅ All files committed to GitHub documentation folder  
+- ER diagram created with 3 tables and relationships  
+- Data dictionary documents 17 columns across 3 tables  
+- Design decisions documented (why 3 tables, no extra columns)  
+- Assumptions clearly stated (business and technical)  
+- Normalization to 3NF explained and justified  
+- BI considerations identified (fact vs dimension tables)  
+- All files committed to GitHub documentation folder  
 
 ---
 
@@ -214,3 +214,4 @@
 **UNIVERSITY:** AUCA  
 **PHASE:** III - Logical Model Design Complete  
 **DATE:** December 2025  
+
