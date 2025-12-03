@@ -59,6 +59,7 @@ CONNECT event_admin/emma@tue_28246_emma_eventbudget_db
 @database/scripts/05_triggers_audit.sql
 ```
 ```
+```
 ---
 ## Links to Documentation
 - [Phase I - Problem Statement](documentation/phase1_problem_statement.md)
