@@ -9,9 +9,8 @@
 
 ---
 ##  STUDENT INFORMATION
-```sql
--- Student Details
-STUDENT_NAME    = 'IZA KURADUSENGE Emma Lise'
+
+STUDENT_NAME    = IZA KURADUSENGE Emma Lise
 STUDENT_ID      = 28246
 COURSE_CODE     = 'INSY 8311'
 COURSE_NAME     = 'Database Development with PL/SQL'
