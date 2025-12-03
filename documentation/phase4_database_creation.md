@@ -66,3 +66,106 @@ SIZE 50M
 AUTOEXTEND ON NEXT 25M MAXSIZE 200M;
 ```
 Purpose: Temporary storage for sorting operations and large queries
+
+## 5. Memory Parameters Configuration  
+
+### Current Memory Settings
+- **SGA Target:** 256M  
+- **PGA Aggregate Target:** 128M  
+- **Memory Target:** Auto-managed by Oracle 21c  
+
+### Configuration Commands
+```sql
+ALTER SYSTEM SET sga_target = 256M SCOPE = BOTH;
+ALTER SYSTEM SET pga_aggregate_target = 128M SCOPE = BOTH;
+```
+
+## 6. Archive Logging Configuration  
+
+- **Archive Logging Status:** ENABLED ✅  
+
+### Configuration Process
+- Database switched to mount mode  
+- Archive logging enabled  
+- Database reopened in archive mode  
+
+### Verification
+```sql
+-- Before: NOARCHIVELOG
+-- After: ARCHIVELOG
+SELECT log_mode FROM v$database;
+```
+
+## 7. Autoextend Parameters  
+
+### Autoextend Configuration
+
+| Tablespace   | Initial Size | Autoextend Increment | Maximum Size |
+|--------------|--------------|----------------------|--------------|
+| EVENT_DATA   | 100M         | 50M                  | 500M         |
+| EVENT_IDX    | 50M          | 25M                  | 200M         |
+| EVENT_TEMP   | 50M          | 25M                  | 200M         |
+
+## 8. Verification Queries  
+
+### PDB Verification
+```sql
+SELECT name, open_mode 
+FROM v$pdbs 
+WHERE name = 'WED_28246_EMMA_EVENT_BUDGET_PLANNER_DB';
+```
+### Tablespace Verification
+```sql
+SELECT tablespace_name, status, contents  
+FROM dba_tablespaces  
+WHERE tablespace_name LIKE 'EVENT%';
+```
+### User Verification
+```sql
+SELECT username, account_status, default_tablespace, temporary_tablespace  
+FROM dba_users  
+WHERE username = 'EVENT_ADMIN';
+```
+### Memory Verification
+```sql
+SELECT name, value  
+FROM v$parameter  
+WHERE name IN ('sga_target', 'pga_aggregate_target');
+```
+## 9. Completion Checklist  
+
+- [x] PDB created with correct naming convention  
+- [x] Admin user created with identifiable username  
+- [x] Password set to student's first name (emma)  
+- [x] Super admin privileges granted (DBA role)  
+- [x] Tablespaces created for data and indexes  
+- [x] Temporary tablespace configured  
+- [x] Memory parameters (SGA, PGA) configured  
+- [x] Archive logging enabled  
+- [x] Autoextend parameters set on all tablespaces  
+- [x] All configurations tested and verified
+      
+## 10. Screenshots  
+
+### Phase IV Implementation Screenshots
+
+**Screenshot 1: PDB Creation Success**  
+![PDB Creation](https://screenshots/phase_iv/01_pdb_creation.png)  
+*Figure 1: PDB `WED_28246_EMMA_EVENT_BUDGET_PLANNER_DB` successfully created and opened*
+
+**Screenshot 2: Tablespace Configuration**  
+![Tablespace Configuration](https://screenshots/phase_iv/02_tablespaces.png)  
+*Figure 2: `EVENT_DATA`, `EVENT_IDX`, and `EVENT_TEMP` tablespaces created with proper specifications*
+
+**Screenshot 3: Memory Parameters**  
+![Memory Parameters](https://screenshots/phase_iv/03_memory_config.png)  
+*Figure 3: `SGA_TARGET` (256M) and `PGA_AGGREGATE_TARGET` (128M) successfully configured*
+
+**Screenshot 4: Archive Logging Enabled**  
+![Archive Logging](https://screenshots/phase_iv/04_archive_logging.png)  
+*Figure 4: Archive logging enabled (`ARCHIVELOG` mode) for database recovery*
+
+**Screenshot 5: Final Verification**  
+![Final Verification](https://screenshots/phase_iv/05_verification.png)  
+*Figure 5: Complete verification of all database components and configurations*
+
