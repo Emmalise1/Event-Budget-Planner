@@ -248,7 +248,7 @@ This MIS solution transforms financial data management from a reactive, error-pr
 
 ---
 
-**DIAGRAM FILE:** [business_process_diagram.png](https://github.com/Emmalise1/Event-Budget-Planner/blob/main/screenshots/BPMN%20Diagram.PNG?raw=true)  
+**DIAGRAM FILE:** ![business_process_diagram.png](https://github.com/Emmalise1/Event-Budget-Planner/blob/main/screenshots/BPMN%20Diagram.PNG?raw=true)  
 **CREATED WITH:** Lucidchart  
 **BPMN VERSION:** 2.0  
 **STUDENT:** IZA KURADUSENGE Emma Lise  
