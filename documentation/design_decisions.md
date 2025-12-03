@@ -26,6 +26,21 @@
 - **Reason:** Automatic cleanup of related data
 - **Example:** Delete event → automatically delete all its categories → delete all expenses
 - **Benefit:** Prevents orphaned data in database
+### Decision 5: Separation of Business and System Tables
+- **Chosen:** Implement 5 total tables with clear separation
+- **Reason:** Balance Phase I proposal with Phase VII requirements
+- **Business Tables (3):** EVENTS, EXPENSE_CATEGORIES, EXPENSES (ER diagram)
+- **System Tables (2):** HOLIDAYS, AUDIT_LOG (not in ER diagram)
+- **Justification:** ER diagrams model business entities; system tables handle technical requirements separately
+
+### Decision 6: Phase VII Compliance Strategy
+- **Chosen:** Add required tables while keeping ER diagram focused on business entities
+- **Reason:** HOLIDAYS and AUDIT_LOG tables are MANDATORY for Phase VII business rule
+- **Implementation:** 
+  - ER diagram shows 3 business tables (as promised in Phase I)
+  - Database includes 5 total tables (3 business + 2 system)
+  - Phase VII implementation uses all 5 tables
+- **Benefit:** Meets all project requirements without confusing business model  
 
 ## 2. BUSINESS ASSUMPTIONS
 
@@ -53,6 +68,12 @@
 - System used for planning future events
 - Not for tracking past historical events
 - All event dates are in the future
+### Assumption 6: System Tables for Compliance
+- HOLIDAYS table contains only public holidays for the upcoming month
+- AUDIT_LOG table automatically captures all database operations
+- System tables are maintained automatically, not by end users
+- Business rule restrictions apply only to DML operations, not queries
+  
 
 ## 3. TECHNICAL ASSUMPTIONS
 
@@ -127,6 +148,12 @@
 3. **Data Integrity** - Foreign keys ensure valid relationships
 4. **Efficient Queries** - Proper indexing possible
 5. **Scalable Design** - Easy to add future enhancements
+   
+### Note on System Tables:
+The HOLIDAYS and AUDIT_LOG tables follow different normalization considerations:
+- **HOLIDAYS:** Simple reference data (1NF sufficient)
+- **AUDIT_LOG:** Append-only logging table (denormalized for performance)
+- **Separation:** These system tables don't affect the 3NF design of business tables   
 
 ## 6. BI & ANALYTICS CONSIDERATIONS
 
@@ -153,29 +180,34 @@
 4. Create dashboard with visual charts
 5. Add predictive spending analytics
 
-## 7. AUDIT TRAIL DESIGN (Phase VII)
+## 7. AUDIT TRAIL & COMPLIANCE DESIGN (Phase VII)
 
-### What Will Be Audited:
-1. All INSERT operations on EXPENSES table
-2. Attempts to exceed budget limits (will be calculated)
-3. Payment status changes
-4. Foreign key violation attempts
+### System Tables Implementation:
+1. **HOLIDAYS Table** (Required for business rule):
+   - holiday_id (PK)
+   - holiday_date (NOT NULL, UNIQUE)
+   - holiday_name (NOT NULL)
+   - is_public_holiday (DEFAULT 'Y')
 
-### Audit Implementation Plan:
-1. **AUDIT_LOG Table** (to be created in Phase VII):
+2. **AUDIT_LOG Table** (Required for comprehensive auditing):
    - audit_id (PK)
-   - table_name (EVENTS, CATEGORIES, EXPENSES)
-   - operation_type (INSERT, UPDATE, DELETE)
-   - user_name (from created_by)
-   - timestamp (SYSDATE)
-   - old_values (for UPDATE/DELETE)
-   - new_values (for INSERT/UPDATE)
-   - success_status (SUCCESS/FAILED)
+   - table_name (ALL tables)
+   - operation_type (INSERT/UPDATE/DELETE)
+   - operation_date (TIMESTAMP)
+   - user_name (DEFAULT USER)
+   - status (SUCCESS/FAILED/BLOCKED)
 
-2. **Database Triggers** (Phase VII):
-   - Will automatically log all expense additions
-   - Will log failed operations (budget exceeded)
-   - Will track who made changes and when
+### Business Rule Implementation:
+- **Restriction:** No DML operations on weekdays (Mon-Fri) or public holidays
+- **Enforcement:** Triggers check HOLIDAYS table before allowing operations
+- **Auditing:** All attempts (successful and blocked) logged to AUDIT_LOG
+- **Testing:** Separate test cases for weekday, weekend, and holiday scenarios
+
+### Audit Scope:
+1. All DML operations on ALL tables
+2. Business rule violation attempts
+3. Successful operations with before/after values
+4. User identity and timestamp for accountability
 
 ## 8. LIMITATIONS & FUTURE ENHANCEMENTS
 
@@ -185,6 +217,11 @@
 3. No automatic category spending tracking (missing current_spending)
 4. No user authentication system
 5. No vendor management beyond name
+
+### Immediate Phase VII Enhancements:
+1. **HOLIDAYS table** - For weekday/holiday restriction enforcement
+2. **AUDIT_LOG table** - For comprehensive system auditing
+3. **Business rule triggers** - No DML on weekdays/public holidays
 
 ### Phase 2.0 Enhancements (Future):
 1. Add warning_threshold column to EXPENSE_CATEGORIES
@@ -197,21 +234,34 @@
 ## 9. SUCCESS CRITERIA FOR PHASE III
 
 ### Phase III Complete When:
-- ER diagram created with 3 tables and relationships  
-- Data dictionary documents 17 columns across 3 tables  
-- Design decisions documented (why 3 tables, no extra columns)  
-- Assumptions clearly stated (business and technical)  
-- Normalization to 3NF explained and justified  
+- ER diagram created with 3 business tables and relationships  
+- Data dictionary documents 30 columns across 5 tables (3 business + 2 system)  
+- Design decisions documented (including separation of business/system tables)  
+- Assumptions clearly stated (business and technical, including Phase VII compliance)  
+- Normalization to 3NF explained and justified (for business tables)  
 - BI considerations identified (fact vs dimension tables)  
+- Phase VII audit/compliance plan outlined  
 - All files committed to GitHub documentation folder  
+
+### Key Deliverables:
+1. ER diagram (3 business tables)
+2. Complete data dictionary (5 tables total)
+3. Design decisions with Phase VII strategy
+4. Documentation of business/system table separation 
 
 ---
 
-**PROJECT:** Event Budget Planner System  
-**STUDENT:** IZA KURADUSENGE Emma Lise  
-**ID:** 28246  
+---
+
+**DESIGN APPROACH:** Hybrid model with business entities (ER diagram) + system tables (compliance)  
+**BUSINESS TABLES IN ER DIAGRAM:** 3  
+**SYSTEM TABLES FOR PHASE VII:** 2  
+**TOTAL TABLES IN DATABASE:** 5  
+**PHASE VII READINESS:** HOLIDAYS and AUDIT_LOG tables designed for business rule implementation  
+**STUDENT:** IZA KURADUSENGE Emma Lise (28246)  
 **COURSE:** Database Development with PL/SQL  
 **UNIVERSITY:** AUCA  
 **PHASE:** III - Logical Model Design Complete  
 **DATE:** December 2025  
+**NOTE:** Design supports all Phase I-VIII requirements while maintaining clean separation between business modeling and system compliance.
 
