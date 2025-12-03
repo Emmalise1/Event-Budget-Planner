@@ -150,7 +150,7 @@ WHERE name IN ('sga_target', 'pga_aggregate_target');
 ### Phase IV Implementation Screenshots
 
 **Screenshot 1: PDB Creation Success**  
-![PDB Creation](https://screenshots/phase_iv/01_pdb_creation.png)  
+![PDB Creation](https://github.com/Emmalise1/Event-Budget-Planner/blob/main/screenshots/phase_iv/01_pdb_creation.png?raw=true)  
 *Figure 1: PDB `WED_28246_EMMA_EVENT_BUDGET_PLANNER_DB` successfully created and opened*
 
 **Screenshot 2: Tablespace Configuration**  
