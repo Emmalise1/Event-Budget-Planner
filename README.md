@@ -29,7 +29,6 @@ Manual spreadsheet budgeting for events is error-prone, lacks real-time validati
 ---
 ## Key Objectives
 ```sql
--- PROJECT OBJECTIVES
 1. Automate budget tracking with real-time validation
 2. Implement business rules via database constraints  
 3. Create comprehensive audit trails
@@ -58,8 +57,7 @@ CONNECT event_admin/emma@tue_28246_emma_eventbudget_db
 @database/scripts/04_procedures_functions.sql
 @database/scripts/05_triggers_audit.sql
 ```
-```
-```
+``
 ---
 ## Links to Documentation
 - [Phase I - Problem Statement](documentation/phase1_problem_statement.md)
