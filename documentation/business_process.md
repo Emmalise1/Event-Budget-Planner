@@ -238,11 +238,11 @@ The BPMN diagram uses **2 horizontal swimlanes** to separate:
 
 The Event Budget Planner System represents a significant improvement over manual spreadsheet-based budgeting. By implementing this BPMN-modeled process, organizations can achieve:
 
-✅ **Automated** budget validation and enforcement  
-✅ **Real-time** financial visibility and insights  
-✅ **Reduced** manual errors and calculation time  
-✅ **Improved** decision-making through data-driven reports  
-✅ **Scalable** process adaptable to events of any size  
+- **Automated** budget validation and enforcement  
+- **Real-time** financial visibility and insights  
+- **Reduced** manual errors and calculation time  
+- **Improved** decision-making through data-driven reports  
+- **Scalable** process adaptable to events of any size  
 
 This MIS solution transforms financial data management from a reactive, error-prone activity into a proactive, efficient, and reliable business process.
 
