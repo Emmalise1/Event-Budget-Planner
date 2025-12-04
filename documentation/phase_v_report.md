@@ -143,7 +143,7 @@ All verification screenshots have been organized in the following structure:
 - Index creation verification  
 
 ### 3. `screenshots/oem_monitoring/`
-- Database performance metrics (if applicable)  
+- Database performance metrics 
 - Tablespace usage statistics  
 
 ---
