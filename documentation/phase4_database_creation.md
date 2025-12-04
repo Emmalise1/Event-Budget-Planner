@@ -82,7 +82,7 @@ ALTER SYSTEM SET pga_aggregate_target = 128M SCOPE = BOTH;
 
 ## 6. Archive Logging Configuration  
 
-- **Archive Logging Status:** ENABLED ✅  
+- **Archive Logging Status:** ENABLED  
 
 ### Configuration Process
 - Database switched to mount mode  
