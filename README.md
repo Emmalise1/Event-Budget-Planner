@@ -64,6 +64,7 @@ CONNECT event_admin/emma@tue_28246_emma_eventbudget_db
 - [Phase II - Business Process](documentation/phase2_business_process.md)  
 - [Phase III - Logical Design](documentation/architecture.md)
 - [Phase IV - Database Creation](documentation/phase4_database_creation.md)
+- [Phase V - Table Implementation & Data Insertion](documentation/phase_v_report.md)
 - [Data Dictionary](documentation/data_dictionary.md)
 - [Design Decisions](documentation/design_decisions.md)
 - [Database Scripts](database/scripts/)
