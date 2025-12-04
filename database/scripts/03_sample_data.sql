@@ -1,5 +1,5 @@
 -- =============================================
--- PHASE V: DATA INSERTION SCRIPT (FIXED VERSION)
+-- PHASE V: DATA INSERTION SCRIPT 
 -- Event Budget Planner System
 -- Student: Emma Lise IZA KURADUSENGE (ID: 28246)
 -- Database: wed_28246_emma_event_budget_planner_db
@@ -603,3 +603,4 @@ END;
 -- =============================================
 
 SELECT 'Script execution completed: ' || TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') FROM dual;
+
