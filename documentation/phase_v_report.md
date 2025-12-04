@@ -80,32 +80,35 @@ Phase V involved the implementation of physical database tables and insertion of
 
 ---
 
-### ✅ Screenshot 3: Aggregations (GROUP BY)
+###  Screenshot 3: Aggregations (GROUP BY)
 
-![Aggregations](https://github.com/Emmalise1/Event-Budget-Planner/blob/main/screenshots/test_results/aggregations.jpg?raw=true)  
+![Aggregations](https://github.com/Emmalise1/Event-Budget-Planner/blob/main/screenshots/test_results/Group%20by%201.PNG?raw=true)  
 *Figure 3: Statistical analysis using GROUP BY including event type distribution with COUNT, AVG, SUM, MIN, MAX, payment status analysis, monthly expense trends, and vendor performance metrics.*
 
 ---
 
-### ✅ Screenshot 4: Subqueries
+###  Screenshot 4: Subqueries
 
-![Subqueries](https://github.com/Emmalise1/Event-Budget-Planner/blob/main/screenshots/test_results/subqueries.jpg?raw=true)  
-*Figure 4: Demonstration of all subquery types including simple WHERE subqueries, EXISTS, NOT EXISTS, IN subqueries, correlated subqueries, and nested subqueries for complex analysis.*
+![Subqueries](https://github.com/Emmalise1/Event-Budget-Planner/blob/main/screenshots/test_results/Subquery%201.PNG?raw=true)
+
+![Subqueries](https://github.com/Emmalise1/Event-Budget-Planner/blob/main/screenshots/test_results/Subquery%202.PNG?raw=true)
+
+*Figure 4: Demonstration of  subquery types including simple WHERE subqueries, EXISTS, NOT EXISTS, IN subqueries, correlated subqueries, and nested subqueries for complex analysis.*
 
 ---
 
-## 🔐 Phase V Data Integrity Verification
+##  Phase V Data Integrity Verification
 
 ---
 
-### ✅ Screenshot 5: Data Integrity Validation
+###  Screenshot 5: Data Integrity Validation
 
-![Data Integrity](https://github.com/Emmalise1/Event-Budget-Planner/blob/main/screenshots/test_results/data_integrity.jpg?raw=true)  
+![Data Integrity](https://github.com/Emmalise1/Event-Budget-Planner/blob/main/screenshots/test_results/Data%20Integrity%20Summary.PNG?raw=true)  
 *Figure 5: Validation results confirming referential integrity, constraint enforcement, and absence of orphaned records.*
 
 ---
 
-### ✅ Validation Results Summary
+###  Validation Results Summary
 - All SELECT queries return data: **PASS**  
 - All constraints properly enforced: **PASS**  
 - Foreign key relationships validated: **PASS**  
@@ -115,7 +118,7 @@ Phase V involved the implementation of physical database tables and insertion of
 
 ---
 
-### ✅ Business Rule Enforcement Confirmed
+###  Business Rule Enforcement Confirmed
 - No negative budgets or amounts  
 - Valid payment statuses only (**PENDING, PAID, CANCELLED, PARTIAL**)  
 - Unique holiday dates enforced  
