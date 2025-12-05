@@ -451,7 +451,7 @@ BEGIN
                 -- Payment status
                 CASE MOD(v_counter, 4)
                     WHEN 0 THEN 'PENDING'
-                    WHEN 1 THEN 'PARTIAL'
+                    WHEN 1 THEN 'PAID'
                     WHEN 2 THEN 'CANCELLED'
                     ELSE 'PAID'
                 END
@@ -603,4 +603,5 @@ END;
 -- =============================================
 
 SELECT 'Script execution completed: ' || TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') FROM dual;
+
 
