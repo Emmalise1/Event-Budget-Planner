@@ -299,146 +299,36 @@ END analyze_category_spending_cursor;
 -- Purpose: Demonstrate bulk operations for performance
 -- =============================================
 
-CREATE OR REPLACE PROCEDURE bulk_update_payment_status(
+CREATE OR REPLACE PROCEDURE bulk_update_payment_status_simple(
     p_old_status IN VARCHAR2,
-    p_new_status IN VARCHAR2,
-    p_batch_size IN NUMBER DEFAULT 100
+    p_new_status IN VARCHAR2
 )
 AS
-    -- Declare cursor for bulk operations
-    CURSOR c_expenses IS
-        SELECT expense_id, amount, category_id
-        FROM expenses
-        WHERE payment_status = p_old_status
-        FOR UPDATE;  -- FOR UPDATE for bulk processing
-    
-    -- Define collection types for bulk operations
     TYPE t_expense_ids IS TABLE OF expenses.expense_id%TYPE;
-    TYPE t_amounts IS TABLE OF expenses.amount%TYPE;
-    TYPE t_category_ids IS TABLE OF expenses.category_id%TYPE;
-    
-    -- Declare collections
     v_expense_ids t_expense_ids;
-    v_amounts t_amounts;
-    v_category_ids t_category_ids;
-    
-    v_total_updated NUMBER := 0;
-    v_total_amount NUMBER := 0;
-    v_start_time TIMESTAMP;
-    v_end_time TIMESTAMP;
-    v_processing_time NUMBER;
-    
 BEGIN
-    DBMS_OUTPUT.PUT_LINE('EXAMPLE 4: BULK COLLECT CURSOR');
-    DBMS_OUTPUT.PUT_LINE('===============================');
-    DBMS_OUTPUT.PUT_LINE('Demonstrating BULK COLLECT and FORALL for optimization');
-    DBMS_OUTPUT.PUT_LINE('');
-    DBMS_OUTPUT.PUT_LINE('Parameters:');
-    DBMS_OUTPUT.PUT_LINE('  Old Status: ' || p_old_status);
-    DBMS_OUTPUT.PUT_LINE('  New Status: ' || p_new_status);
-    DBMS_OUTPUT.PUT_LINE('  Batch Size: ' || p_batch_size);
-    DBMS_OUTPUT.PUT_LINE('');
+    -- Get all expense IDs with old status
+    SELECT expense_id
+    BULK COLLECT INTO v_expense_ids
+    FROM expenses
+    WHERE payment_status = p_old_status;
     
-    v_start_time := SYSTIMESTAMP;
+    -- Bulk update using FORALL
+    FORALL i IN 1..v_expense_ids.COUNT
+        UPDATE expenses
+        SET payment_status = p_new_status
+        WHERE expense_id = v_expense_ids(i);
     
-    -- Open cursor
-    OPEN c_expenses;
-    DBMS_OUTPUT.PUT_LINE('Cursor opened for bulk processing...');
+    COMMIT;
     
-    LOOP
-        -- BULK COLLECT with LIMIT clause for memory management
-        FETCH c_expenses 
-        BULK COLLECT INTO v_expense_ids, v_amounts, v_category_ids
-        LIMIT p_batch_size;
-        
-        -- Exit when no more rows
-        EXIT WHEN v_expense_ids.COUNT = 0;
-        
-        DBMS_OUTPUT.PUT_LINE('Processing batch of ' || v_expense_ids.COUNT || ' records...');
-        
-        -- BULK UPDATE using FORALL (much faster than row-by-row)
-        BEGIN
-            FORALL i IN 1..v_expense_ids.COUNT
-                UPDATE expenses
-                SET payment_status = p_new_status,
-                    date_added = CASE WHEN p_new_status = 'PAID' THEN SYSDATE ELSE date_added END
-                WHERE expense_id = v_expense_ids(i);
-            
-            v_total_updated := v_total_updated + SQL%ROWCOUNT;
-            
-            -- Calculate total amount in this batch
-            FOR i IN 1..v_amounts.COUNT LOOP
-                v_total_amount := v_total_amount + v_amounts(i);
-            END LOOP;
-            
-            COMMIT;  -- Commit after each batch
-            
-            DBMS_OUTPUT.PUT_LINE('  Batch updated: ' || v_expense_ids.COUNT || ' records');
-            
-        EXCEPTION
-            WHEN OTHERS THEN
-                DBMS_OUTPUT.PUT_LINE('  Error in batch: ' || SQLERRM);
-                ROLLBACK;
-                RAISE;
-        END;
-    END LOOP;
-    
-    CLOSE c_expenses;
-    
-    v_end_time := SYSTIMESTAMP;
-    v_processing_time := (v_end_time - v_start_time) * 86400;  -- Convert to seconds
-    
-    DBMS_OUTPUT.PUT_LINE('');
-    DBMS_OUTPUT.PUT_LINE('BULK PROCESSING COMPLETE:');
-    DBMS_OUTPUT.PUT_LINE('  Total records updated: ' || v_total_updated);
-    DBMS_OUTPUT.PUT_LINE('  Total amount: RWF ' || TO_CHAR(v_total_amount, '999,999,999'));
-    DBMS_OUTPUT.PUT_LINE('  Processing time: ' || ROUND(v_processing_time, 3) || ' seconds');
-    
-    IF v_total_updated > 0 THEN
-        DBMS_OUTPUT.PUT_LINE('  Average time per record: ' || 
-                            ROUND(v_processing_time / v_total_updated, 5) || ' seconds');
-    END IF;
-    
-    -- Log the bulk operation
-    DECLARE
-        v_audit_id NUMBER;
-    BEGIN
-        SELECT COALESCE(MAX(audit_id), 0) + 1 INTO v_audit_id FROM audit_log;
-        
-        INSERT INTO audit_log (
-            audit_id, table_name, operation_type, user_name,
-            status, old_values, new_values, operation_date
-        ) VALUES (
-            v_audit_id,
-            'EXPENSES', 'BULK_UPDATE', USER,
-            'SUCCESS',
-            '{"old_status":"' || p_old_status || 
-            '", "records_updated":' || v_total_updated || '}',
-            '{"new_status":"' || p_new_status || 
-            '", "total_amount":' || v_total_amount || 
-            ', "processing_time":' || ROUND(v_processing_time, 3) || '}',
-            SYSTIMESTAMP
-        );
-        
-        COMMIT;
-    END;
-    
-    DBMS_OUTPUT.PUT_LINE('');
-    DBMS_OUTPUT.PUT_LINE('KEY OPTIMIZATION FEATURES:');
-    DBMS_OUTPUT.PUT_LINE('  ✓ BULK COLLECT for batch fetching');
-    DBMS_OUTPUT.PUT_LINE('  ✓ LIMIT clause for memory management');
-    DBMS_OUTPUT.PUT_LINE('  ✓ FORALL for bulk DML operations');
-    DBMS_OUTPUT.PUT_LINE('  ✓ Batch COMMITs for performance');
+    DBMS_OUTPUT.PUT_LINE('Bulk update completed: ' || SQL%ROWCOUNT || ' records updated');
     
 EXCEPTION
     WHEN OTHERS THEN
-        IF c_expenses%ISOPEN THEN
-            CLOSE c_expenses;
-        END IF;
-        DBMS_OUTPUT.PUT_LINE('ERROR in bulk processing: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
         ROLLBACK;
         RAISE;
-END bulk_update_payment_status;
+END bulk_update_payment_status_simple;
 /
 
 -- =============================================
