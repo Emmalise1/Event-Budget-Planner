@@ -39,17 +39,17 @@ DML operations (INSERT, UPDATE, DELETE) are **NOT ALLOWED**:
 
 | Objective | Status |
 |----------|--------|
-| Holiday Management System | ✅ Completed |
-| Enhanced AUDIT_LOG Table | ✅ Completed |
-| LOG_AUDIT_EVENT + PROC_AUDIT_EVENT | ✅ Completed |
-| CHECK_DML_ALLOWED Function | ✅ Completed |
-| 3 Simple Restriction Triggers | ✅ Completed |
-| Compound Trigger for Expenses | ✅ Completed |
-| All 6 Testing Requirements | ✅ Passed |
+| Holiday Management System |  Completed |
+| Enhanced AUDIT_LOG Table |  Completed |
+| LOG_AUDIT_EVENT + PROC_AUDIT_EVENT |  Completed |
+| CHECK_DML_ALLOWED Function |  Completed |
+| 3 Simple Restriction Triggers |  Completed |
+| Compound Trigger for Expenses |  Completed |
+| All 6 Testing Requirements |  Passed |
 
 ---
 
-# 🏗️ Implementation Components
+#  Implementation Components
 
 ##  Holiday Management System
 Tracks public holidays for **December 2025** to enforce DML restrictions.
@@ -94,21 +94,79 @@ Triggers enforce business rules on each table:
 
 - `trg_expenses_dml_restriction` - EXPENSES table
 
-5. Compound Trigger for Comprehensive Auditing
-trg_compound_expenses_audit provides bulk processing and detailed expense change tracking.
+## 5. Compound Trigger for Comprehensive Auditing
+`trg_compound_expenses_audit` provides bulk processing and detailed expense change tracking.
 
-Testing Requirements Verification
-✅ Requirement 1: Trigger blocks INSERT on weekday (DENIED)
+# Testing Requirements Verification
+ Requirement 1: Trigger blocks INSERT on weekday (DENIED)
 Test Date: FRIDAY, December 5, 2025
 
-sql
--- Test Result:
-Current Date: FRIDAY   , 05-DEC-2025
-DML Status: DENIED:WEEKDAY:Today is FRIDAY (weekday)
+```sql
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('');
+    DBMS_OUTPUT.PUT_LINE(' TEST 1: INSERT ON WEEKDAY');
+    DBMS_OUTPUT.PUT_LINE('============================');
+    DBMS_OUTPUT.PUT_LINE('Expected: DENIED (because ' || 
+        TRIM(TO_CHAR(SYSDATE, 'DAY')) || ' is a weekday)');
+    DBMS_OUTPUT.PUT_LINE('');
+END;
+/
 
-Attempting to insert an event...
-❌ INSERT BLOCKED: ORA-20001: DML Operation INSERT on EVENTS table is NOT ALLOWED...
-Screenshot Evidence: screenshots/phase_vii/test1_weekday_denied.png
+DECLARE
+    v_category_id NUMBER;
+    v_new_expense_id NUMBER;
+    v_error_message VARCHAR2(1000);
+BEGIN
+    -- Get a category ID for testing
+    SELECT MIN(category_id) INTO v_category_id 
+    FROM expense_categories 
+    WHERE ROWNUM = 1;
+    
+    -- Get next expense ID
+    SELECT COALESCE(MAX(expense_id), 0) + 1 INTO v_new_expense_id 
+    FROM expenses;
+    
+    -- Attempt to insert expense (should fail on weekday)
+    BEGIN
+        INSERT INTO expenses (
+            expense_id,
+            category_id,
+            description,
+            amount,
+            vendor_name,
+            payment_status,
+            date_added
+        ) VALUES (
+            v_new_expense_id,
+            v_category_id,
+            'Weekday Test Expense - Should be BLOCKED',
+            5000.00,
+            'Test Vendor Inc',
+            'PENDING',
+            SYSDATE
+        );
+        
+        -- If we get here, insert succeeded (should only happen on weekends)
+        DBMS_OUTPUT.PUT_LINE(' RESULT: INSERT ALLOWED');
+        DBMS_OUTPUT.PUT_LINE('   (Today must be weekend and not a holiday)');
+        COMMIT;
+        
+        -- Clean up
+        DELETE FROM expenses WHERE expense_id = v_new_expense_id;
+        COMMIT;
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            v_error_message := SQLERRM;
+            DBMS_OUTPUT.PUT_LINE(' RESULT: INSERT DENIED');
+            DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE(' ERROR MESSAGE:');
+            DBMS_OUTPUT.PUT_LINE('   ' || v_error_message);
+    END;
+END;
+/
+```
+
 
 ✅ Requirement 2: Trigger allows INSERT on weekend (ALLOWED)
 Simulated Test: Saturday, December 6, 2025 (Non-holiday Saturday)
