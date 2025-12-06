@@ -345,11 +345,17 @@ Phase VI has been successfully completed with all requirements not only met but 
 The system now provides a complete, production-ready PL/SQL foundation for event budget management, demonstrating comprehensive mastery of Oracle database programming concepts and industry best practices.
 
 Student: Emma Lise IZA KURADUSENGE
+
 Student ID: 28246
+
 Course: Database Development with PL/SQL (INSY 8311)
+
 Group: Wednesday
+
 Lecturer: Eric Maniraguha
+
 Completion Date: December 6, 2025
+
 Status:  PHASE VI SUCCESSFULLY COMPLETED
 
 
