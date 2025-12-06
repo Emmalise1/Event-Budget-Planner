@@ -25,13 +25,13 @@ Manual spreadsheet budgeting for events is error-prone, lacks real-time validati
 
 ---
 ## Key Objectives
-```sql
+
 1. Automate budget tracking with real-time validation
 2. Implement business rules via database constraints  
 3. Create comprehensive audit trails
 4. Provide BI analytics for decision-making
 5. Restrict DML to weekends (Phase VII requirement)
-```
+
 ---
 
 ## Quick Start Instructions
