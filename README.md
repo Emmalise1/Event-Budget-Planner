@@ -70,4 +70,4 @@ CONNECT event_admin/emma@tue_28246_emma_eventbudget_db
 - [Design Decisions](documentation/design_decisions.md)
 - [Database Scripts](database/scripts/)
 - [Screenshots](screenshots/)
-```
+
