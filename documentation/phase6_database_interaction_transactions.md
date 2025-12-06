@@ -129,7 +129,7 @@ Script Location:
 | Exception Type        | Purpose                     | Implementation                                           | Screenshot Evidence                                   |
 |-----------------------|-----------------------------|-----------------------------------------------------------|--------------------------------------------------------|
 | Predefined Exceptions | System error handling        | `NO_DATA_FOUND`, `TOO_MANY_ROWS`, `ZERO_DIVIDE`          | ![Predefined Exceptions](https://github.com/Emmalise1/wed_28246_emmalise_eventbudgetplanner/blob/main/screenshots/test_results/04_exception_handling1.PNG?raw=true) |
-| ![Predefined Exceptions](https://github.com/Emmalise1/wed_28246_emmalise_eventbudgetplanner/blob/main/screenshots/test_results/04_exception_handling2.PNG?raw=true) |
+| Predefined Exceptions | System error handling        | `NO_DATA_FOUND`, `TOO_MANY_ROWS`, `ZERO_DIVIDE`          | ![Predefined Exceptions](https://github.com/Emmalise1/wed_28246_emmalise_eventbudgetplanner/blob/main/screenshots/test_results/04_exception_handling2.PNG?raw=true) |
 | Custom Exceptions     | Business rule violations     | Budget exceeded, invalid dates, unauthorized access      |![Predefined Exceptions](https://github.com/Emmalise1/wed_28246_emmalise_eventbudgetplanner/blob/main/screenshots/test_results/custom-exceptions.PNG?raw=true)                                                       |
 | Error Logging         | Comprehensive audit trail    | Autonomous transactions, complete error context          | —                                                      |
 | Recovery Mechanisms   | System resilience            | Savepoints, retry logic, graceful degradation            | —                                                      |
